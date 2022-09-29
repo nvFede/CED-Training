@@ -1,13 +1,16 @@
-# Sample Hardhat Project
+# Project Money dApp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
+Simple dApp to deposit and withdraw money with benefits
 
-Try running some of the following tasks:
+[Contribution guidelines for this project](img/console.png)
+[Contribution guidelines for this project](img/money-dapp.png)
 
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.js
-```
+## objective
+
+First look -  Developing a dapp and deploy it to the test network (Rinkeby)
+
+### Use in the project
+
+- HTML5
+- Bulma
+- Ether.js
