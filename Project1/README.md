@@ -2,8 +2,9 @@
 
 Simple dApp to deposit and withdraw money with benefits
 
-[Contribution guidelines for this project](img/console.png)
-[Contribution guidelines for this project](img/money-dapp.png)
+![Alt text](img/console.png?raw=true)
+![Alt text](img/dapp.png?raw=true)
+
 
 ## objective
 
