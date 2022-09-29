@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M0N3Y</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+
+</head>
+
+<body>
+
+    <section class="hero is-info">
+        <div class="hero-body">
+            <p class="title">
+                M0N3Y DAPP
+            </p>
+            <p class="subtitle">
+                Simple dApp to deposit and withdraw money with benefits
+            </p>
+        </div>
+    </section>
+
+    <div class="columns my-5">
+        <div class=" column is-half is-offset-one-quarter">
+            
+            <div class="box">
+                <div class="field">
+                    <label class="label" for="money"> Input amount you want to deposit</label>
+                    <input class="input is-normal" type="text" id="money" placeholder="amount in wei">
+                </div>
+                <button onclick="Deposit()" class="button is-success">Deposit</button>
+            </div>
+        
+            <div class="box">
+                <div class="field">
+                    <label class="label">Time to withdraw with bonus!</label>
+                </div>
+                <button onclick="Withdraw()" class="button is-danger">Withdraw</button>
+            </div>
+        </div>
+    </div>
+    
+
+    <footer class="footer">
+        <div class="content has-text-centered">
+            <p>
+                <strong>Money dApp</strong> by <a href="https://github.com/nvFede/">Federico</a>.
+            </p>
+            <p>As a part of the Certified Ethereum Developer™ </p>
+        </div>
+    </footer>
+
+
+<script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+    <script>
+            // SPDX-License-Identifier: UNLICENSED
+            pragma solidity >= 0.7.0 < 0.9.0;
+
+            contract Money {
+
+                address public contractOwner;
+                uint money;
+
+                constructor() {
+                    contractOwner = msg.sender;
+                }
+
+                function Deposit(uint _money) public {
+                    money = _money;
+                }
+
+                function Withdraw() public view returns(uint) {
+                    return money * 2;
+                }
+                function owner() public view returns(address) {
+                    return contractOwner;
+                }
+            }
+    </script>
+   
+   <script>
+
+        window.ethereum.enable();
+        var provider = new ethers.providers.Web3Provider(web3.currentProvider, 'rinkeby');
+
+        contractAddress = "0x4513F283C64e364e08fa4cBC7861940b54Fc1E17";
+        contractABI = [
+                            {
+                                "inputs": [
+                                    {
+                                        "internalType": "uint256",
+                                        "name": "_money",
+                                        "type": "uint256"
+                                    }
+                                ],
+                                "name": "Deposit",
+                                "outputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [],
+                                "stateMutability": "nonpayable",
+                                "type": "constructor"
+                            },
+                            {
+                                "inputs": [],
+                                "name": "contractOwner",
+                                "outputs": [
+                                    {
+                                        "internalType": "address",
+                                        "name": "",
+                                        "type": "address"
+                                    }
+                                ],
+                                "stateMutability": "view",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [],
+                                "name": "owner",
+                                "outputs": [
+                                    {
+                                        "internalType": "address",
+                                        "name": "",
+                                        "type": "address"
+                                    }
+                                ],
+                                "stateMutability": "view",
+                                "type": "function"
+                            },
+                            {
+                                "inputs": [],
+                                "name": "Withdraw",
+                                "outputs": [
+                                    {
+                                        "internalType": "uint256",
+                                        "name": "",
+                                        "type": "uint256"
+                                    }
+                                ],
+                                "stateMutability": "view",
+                                "type": "function"
+                            }
+                        ];
+
+
+            var moneyContract;
+            var signer;
+            
+            provider.listAccounts().then(function(accounts) {
+                signer = provider.getSigner(accounts[0]);
+                moneyContract = new ethers.Contract(
+                    contractAddress, contractABI, signer
+                    );
+            });
+
+            async function Withdraw() {
+                WithdrawPromise = moneyContract.Withdraw();
+                var Money = await WithdrawPromise;
+                console.log(Number(Money));
+                console.log("Congrats!, you earned double!");
+            }
+
+            async function Deposit() {
+                let Money = document.getElementById('money').value;
+                console.log(`you deposit ${Money} wei`);
+                DepositPromise = moneyContract.Deposit(Money);
+                await DepositPromise;
+            }
+    </script>
+
+</body>
+</html>
